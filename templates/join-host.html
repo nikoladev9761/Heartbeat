@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Heartbeat - Choose Option {% endblock title %}
+
+{% block new-item %}
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'profile' %}">User Profile</a>
+	</li>
+{% endblock new-item %}
+
+{% block additional_css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/form.css' %}">
+{% endblock additional_css %}
+
+{% block content %}
+
+	{% if messages %}
+		{% for message in messages %}
+			<div class="notification-{{ message.tags }}">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				<strong>{{ message }}</strong>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	<div class="center-forms">
+		<div class="join-left">
+			<div class="container join-container">
+				<form class="row g-3" action="{% url 'join' %}" method="POST">
+					{% csrf_token %}
+					<div class="row">
+						<div class="col-md-8 offset-md-3">
+							<div class="signup-form">
+								<h4 class="mb-5 text-secondary">Join Meeting</h4>
+								
+								<div class="row">
+									<div class="mb-3 col-md-7">
+										<div class="form-control">
+											<label for="meetingName5" class="form-label">Meeting Name<span class="text-danger">*</span></label>
+											<input type="text" name="meeting_name" id="meetingName5" required>
+											<i class="fas fa-check-circle"></i>
+											<i class="fas fa-exclamation-circle"></i>
+											<small>Error message</small>
+										</div>
+									</div>
+									<br>
+									<div class="mb-3 col-md-7">
+										<div class="form-control">
+											<label for="meeting_token" class="form-label">Meeting Token<span class="text-danger">*</span></label>
+											<input type="password" name="meeting_token" id="meetingToken5" required>
+											<i class="fas fa-check-circle"></i>
+											<i class="fas fa-exclamation-circle"></i>
+											<small>Error message</small>
+										</div>
+									</div>
+									<br>
+
+									{% if request.session.meeting_current_lock_time %}
+										<p>Your current penalty is {{request.session.meeting_current_lock_time}} minutes.</p> 
+										<p>Next incorrect login credentials will lock you out for {{request.session.meeting_next_lock_time}} minutes.</p>
+									{% else %}
+										<div class="col-md-7">
+											<button class="btn btn-primary float-md-start" id="submit-btn">Join Meeting</button>
+										</div> 
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="create-right">
+			<div class="container join-container">
+				<div class="col-md-8 offset-md-3">
+					<form class="row g-3" action="{% url 'host' %}" method="POST">
+						{% csrf_token %}
+						<div class="col-md-8 offset-md-3">
+							<div class="signup-form">
+								<h4 class="mb-5 text-secondary">Host Meeting</h4> <br>
+								
+								<div class="col">
+									<button type="submit" class="btn btn-primary float-md-start" id="host-btn">Host Meeting</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block js %}
+	<script type="text/javascript" src="{% static '/js/meeting-form.js' %}"></script>
+	<script type="text/javascript">
+		
+		document.querySelector('#meetingName5').focus();
+		document.querySelector('#meetingName5').onkeyup = function(e) {
+			if (e.keyCode === 13) {  
+				document.querySelector('#submit-btn').click();
+			}
+		};
+
+		document.querySelector('#submit-btn').onclick = function(e) {
+			var roomName = document.querySelector('#meetingName5').value;
+			window.location.pathname = '/chat/' + roomName + '/';
+		};
+		
+	</script>
+{% endblock js %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Heartbeat - Home {% endblock title %}
+
+{% block new-item %} 
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'registration' %}">Registration</a>
+  	</li>
+
+	<li class="nav-item navbar-center">
+		<a class="nav-link" href="{% url 'login' %}">Chat Now</a>
+	</li>
+{% endblock new-item %}
+
+{% block content %}
+	{% load static %}
+
+	<img src="{% static '/images/hb.png' %}" alt="bgnd-img" class="bgnd">
+
+	<p class="welcome" style="color: white;"> <strong style="font-size: 80px; color: bisque;">Welcome to <span style="color: rgb(218, 30, 30);">Heartbeat</span> </strong> <br>
+	<span style="color:rgb(0, 89, 255);">Conversations</span>.<span style="color:rgb(0, 89, 255);">Safe</span>.<span style="color:rgb(0, 89, 255);">Private</span>.</p>
+
+{% endblock content %}

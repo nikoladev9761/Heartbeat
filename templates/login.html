@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Heartbeat - Login {% endblock title %}
+
+{% block new-item %}
+	<li class="nav-item navbar-center">
+		<a class="nav-link" href="{% url 'login' %}">Chat Now</a>
+	</li>
+{% endblock new-item %}
+
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/form.css' %}">
+{% endblock additional_css %}
+
+{% block content %}
+
+	{% if messages %}
+		{% for message in messages %}
+			<div class="notification-{{ message.tags }}">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				<strong>{{ message }}</strong>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	<div class="container">
+		<form class="row g-3" action="{% url 'login' %}" method="POST">
+			{% csrf_token %}
+				<div class="row">
+					<div class="col-md-6 offset-md-3">
+						<div class="signup-form">
+							<h4 class="mb-5 text-secondary">Login</h4>
+
+								<div class="mb-3 col-md-12">
+									<div class="form-control">
+										<label for="username">Username<span class="text-danger">*</span></label>
+										<input type="text" name="username" id="inputUsername5" placeholder="mark11" required>
+										<i class="fas fa-check-circle"></i>
+										<i class="fas fa-exclamation-circle"></i>
+										<small>Error message</small>
+									</div>
+								</div>
+
+								<div class="mb-3 col-md-12">
+									<div class="form-control">
+										<label for="inputPassword5">Password<span class="text-danger">*</span></label>
+										<input type="password" name="usr_pswd" id="inputPassword5" required>
+										<i class="fas fa-check-circle"></i>
+										<i class="fas fa-exclamation-circle"></i>
+										<small>Error message</small>
+									</div>
+								</div>
+								
+								{% if request.session.current_lock_time %}
+									<p>Your current penalty is {{request.session.current_lock_time}} minutes.</p> 
+									<p>Next incorrect login credentials will lock you out for {{request.session.next_lock_time}} minutes.</p>
+								{% else %}
+									<div class="col-md-7">
+										<button class="btn btn-primary float-end" id="submit-btn">Submit</button>
+									</div> <br> <br> <br>
+								{% endif %}
+								
+							<p class="text-center mt-3 text-secondary">Forgot password? <a href="{% url 'recovery' %}">Reset Password</a></p>
+							<p class="text-center mt-3 text-secondary">Don't have an account? <a href="{% url 'registration' %}">Register Now</a></p>
+						</div>
+					</div>
+				</div>
+		</form>
+	</div>
+{% endblock content %}
+
+{% block js %}
+	<script type="text/javascript" src="{% static '/js/log-form.js' %}"></script>
+{% endblock js %}

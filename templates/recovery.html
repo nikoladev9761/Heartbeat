@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Heartbeat - Account Recovery {% endblock title %}
+
+{% block additional_css %}
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/form.css' %}">
+{% endblock additional_css %}
+
+{% block content %}
+	{% if messages %}
+		{% for message in messages %}
+			<div class="notification-{{ message.tags }}">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				<strong>{{ message }}</strong>
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	<div class="container reset">
+		<form class="row g-3" action="{% url 'recovery' %}" method="POST">
+			{% csrf_token %}
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="signup-form">
+						<h4 class="mb-5 text-secondary">Password Reset</h4>
+
+						<div class="mb-3 col-md-12">
+							<div class="form-control">
+								<label for="recovery-email">Enter email associated with your account:<span class="text-danger">*</span></label>
+								<input type="text" name="recovery-email" id="inputEmail5" required>
+								<i class="fas fa-check-circle"></i>
+								<i class="fas fa-exclamation-circle"></i>
+								<small>Error message</small>
+							</div>
+						</div> 
+
+						<div class="col-md-7">
+							<button class="btn btn-primary float-end" id="submit-btn">Submit</button>
+						</div> <br><br>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock content %}
+
+{% block js %}
+	<script type="text/javascript" src="{% static '/js/recovery.js' %}"></script>
+{% endblock js %}

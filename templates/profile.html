@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Heartbeat - User Profile {% endblock title %}
+
+{% block new-item %}
+	<li class="nav-item navbar-center">
+		<a class="nav-link" href="{% url 'join' %}">Join or Host Meeting</a>
+	</li>
+{% endblock new-item %}
+
+{% block content %}
+
+	<a href="{% url 'logout' %}"><button class="btn btn-primary">Logout</button></a>
+
+{% endblock content %}

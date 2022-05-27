@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Heartbeat - Meeting Room {% endblock title %}
+
+{% block additional_css %}
+	<link rel="stylesheet" type="text/css" href="{% static '/css/chat.css' %}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock additional_css %}
+
+{% block content %}
+
+	{% if messages %}
+		{% for message in messages %}
+			<div class="notification-{{ message.tags }}">
+				<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				<strong>{{ message }}</strong>
+			</div>
+		{% endfor %}
+	{% endif %}
+	
+	{% if request.session.meetingName %}
+			<div class="credentials">
+				<form class="row g-3" action="{% url 'meeting' meeting_name=meeting_name %}" method="POST">
+					{% csrf_token %}
+					<div class="signup-form">
+					<div class="mb-3 col-md-12">
+						<label for="participants">Invite other people:</label> 
+						<button class="fas fa-exclamation-triangle" data-toggle="tooltip" data-bs-placement="right" title="If you are sending emails to multiple users, use below example otherwise they will not be sent!" ></button>
+						<input type="text" name="participants" id="" placeholder="email1, email2, email3, ..."> <br><br>
+						<small><i>If you are host, you can access <br> this meeting anytime with old token.</i></small>
+						<br> <br>
+						<div class="col">
+							<button type="submit" class="btn btn-primary float-md-start" id="host-btn">Send Invitations</button>
+						</div>
+					</div>
+					</div>
+				</form> 
+			</div>
+	{% else %}
+	{% endif %}
+
+	<div class="container mt-4"> 
+		<div class="card mx-auto" style="max-width:900px"> 
+			<div class="card-header bg-transparent">
+				<div class="navbar navbar-expand p-0">  
+					<ul class="navbar-nav me-auto align-items-center">
+						<li class="nav-item">
+							<span><b>Participants:</b>&nbsp;&nbsp;</span>
+							<span class="nav-name"></span>
+						</li>
+					</ul>
+					
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-link">
+							<span class="nav-name">
+								<a href="{% url 'leave_meeting' %}"> <i class="fas fa-times" style="font-size:27px;"></i> </a>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div id="msg" class="card-body p-4" style="height: 600px; overflow: auto;"> 
+
+			</div>
+			
+			<div class="card-footer bg-white position-absolute w-100 bottom-0 m-0 p-1">
+				<div class="input-group">
+					
+					<input type="text" class="form-control border-0" id="message-input" placeholder="Write a message...">
+					<div class="input-group-text bg-transparent border-0">
+						<button class="btn btn-light text-secondary" id="message-submit">
+							<i class="fa fa-send"></i>
+						</button> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{{ meeting_name|json_script:"meeting-name" }} 
+
+{% endblock content %}
+
+{% block js %}
+	<script type="text/javascript">
+		const meetingName = JSON.parse(document.getElementById('meeting-name').textContent);
+		
+
+		const chatSocket = new WebSocket(
+			'ws://'
+			+ window.location.host
+			+ '/ws/chat/'                  
+			+ meetingName
+			+ '/'
+		);
+				
+		chatSocket.onmessage = function(e) {
+			let data = JSON.parse(e.data);
+			let full_msg = data.message;
+			
+			let usrn = String(full_msg).split(":")[0]
+			let msg = String(full_msg).split(":")[1]
+
+
+			if (data.message == '') {} 
+			else {
+				let add_msg = `<div class="d-flex align-items-baseline blue"> <div><div class="card card-text d-inline-block p-2 px-3 m-1">${usrn}: ${msg}</div></div> </div>`;
+				document.querySelector('#msg').innerHTML += add_msg
+			}
+
+			const participantsData = `${data.lista}`;
+			const participants = participantsData .replace(/[\[\]']+/g,'')
+			document.querySelector('.nav-item span.nav-name').innerHTML = participants
+		};
+
+
+		chatSocket.onclose = function(e) {
+			console.error('Chat socket closed unexpectedly. Try to refresh page');
+		};
+	
+
+		document.querySelector('#message-input').focus(); 
+		document.querySelector('#message-input').onkeyup = function(e) {
+			if (e.keyCode === 13) {  
+				document.querySelector('#message-submit').click();
+			}
+		};
+		
+
+		document.querySelector('#message-submit').onclick = function(e) {
+			const messageInputDom = document.querySelector('#message-input'); 
+			const message = messageInputDom.value;  
+
+			const userId = "{{request.session.user_id}}";
+			chatSocket.send(JSON.stringify({
+				'userId': userId,
+				'message': message
+			}));
+	
+			messageInputDom.value = '';
+		};
+
+
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+{% endblock js %}
+
+

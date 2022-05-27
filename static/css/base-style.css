@@ -1,0 +1,102 @@
+body {
+	padding-top: 60px;
+	overflow: hidden;
+}
+
+@media (max-width: 979px) {
+body {
+	padding-top: 0px;
+}
+}
+
+img {
+	pointer-events: none;
+	position: absolute;
+	width: 100%;
+	z-index: -1;
+}
+
+.welcome {
+	text-align: center;
+	top: 60%;
+    width: 100%;
+    position: fixed;
+	font-size: 50px;
+	font-family: sans-serif;
+}
+
+													/* NAVBAR */
+
+nav {
+	background: rgb(233,50,25);
+	background: linear-gradient(45deg, rgba(233,50,25,1) 35%, rgba(14,134,232,1) 68%);  
+}
+
+.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+	top: 9px;
+}
+
+nav .navbar-nav li a {
+	font-size: 18px;
+	color: white !important
+}
+
+													/* FORM */
+
+
+.mb-5.text-secondary {
+	text-align: left;
+	font-size: 35px;
+}
+
+.join-center {
+	display: block;
+	margin: auto;
+	width: 50%;
+}
+
+.btn-primary {
+	height: 55px;
+	width: 200px;
+}
+
+													/* NOTIFICATION */
+
+.notification-success {
+	padding: 10px;
+	background-color: #25c114;
+	color: white;
+	text-align: center;
+}
+
+.notification-error {
+	padding: 10px;
+	background-color: #f44336;
+	color: white;
+	text-align: center;
+}
+
+.notification-info {
+	padding: 10px;
+	background-color: #0a7edd;
+	color: white;
+	text-align: center;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 27px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+  }
+  
+.closebtn:hover {
+color: black;
+}

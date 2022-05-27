@@ -1,0 +1,110 @@
+.container {
+	background-color: #fff;
+	border-radius: 2px;
+	box-shadow: 0 19px 38px rgba(23, 89, 211, 0.473), 0 13px 13px rgba(212, 9, 9, 0.397);
+	margin: 1rem;
+	overflow: hidden;
+	width: 350px;
+	max-width: 100%;
+}
+
+.center-forms {
+	text-align: center;
+}
+
+.join-container {
+	display: inline-block;
+	height: 30rem;
+}
+
+.signup-form {
+	margin-top: 40px;
+}
+
+.join-left {		
+	width: 45%;		
+	float: left;	
+	margin-top: 1rem;
+	margin-left: 7rem;
+}
+
+.create-right {		
+	width: 45%;		
+	float: left;	
+	margin-top: 1rem;
+	margin-left: -0.3rem;
+}
+
+div.form-control {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	position: relative;
+	border: none;
+}
+
+.verification {
+	height: 20rem;
+}
+
+.reset {
+	height: 30rem;
+}
+
+div.form-control label {
+	float: left;		
+	margin-bottom: 5px;
+}
+
+div.form-control input {
+	border: 3px solid #f0f0f0;
+	border-radius: 4px;
+	display: block;			
+	margin-left: -14px;
+	font-family: inherit;
+	font-size: 16px;
+	padding: 10px;
+	width: 100%;
+}
+
+.form-control input:focus {
+	outline: 0;					
+	border-color: #777;
+}
+
+.form-control.success input {
+	border-color: #2ecc71;		
+}
+
+.form-control.error input {
+	border-color: #e74c3c;		
+}
+
+.form-control i {
+	visibility: hidden;
+	position: absolute; 
+	top: 48px;				
+	right: 32px;			
+}
+
+.form-control.success i.fa-check-circle {
+	color: #2ecc71;						
+	visibility: visible;
+}
+
+.form-control.error i.fa-exclamation-circle {
+	color: #e74c3c;							
+	visibility: visible;
+}
+
+.form-control small {
+	color: #e74c3c;
+	position: absolute;
+	bottom: -8;				
+	left: 12;
+	visibility: hidden;
+}
+
+.form-control.error small {
+	visibility: visible;
+}
+

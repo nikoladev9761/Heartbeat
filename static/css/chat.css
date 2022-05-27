@@ -1,0 +1,71 @@
+/* tooltip design */
+button.fas.fa-exclamation-triangle {
+	font-size: 27px;
+	color: red;
+	background-color: transparent;
+	border: none;
+}
+
+.credentials {
+	float: right;
+	width: 370px;
+	margin-right: 20px;
+	border-radius: 2px;
+	box-shadow: 0 19px 38px rgba(23, 89, 211, 0.473), 0 13px 13px rgba(212, 9, 9, 0.397);
+} 
+
+.signup-form {
+	margin-left: 70px;
+	margin-bottom: 30px;
+}
+
+/* ---------------------------------- CHAT ------------------------------ */
+
+a.nav-link {
+	color: #000;
+	font-size: 18px;
+	padding: 0;
+}
+
+span.nav-name {
+	color: #000;
+	font-size: 18px;
+	padding: 0;
+}
+
+.avatar {
+	background-image: url("../images/avatar.png");
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	border: 2px solid #18e818;
+	padding: 2px;
+	flex: none;
+}
+
+input:focus {
+	outline: 0px !important;
+	box-shadow: none !important;
+}
+
+div.d-flex.align-items-baseline.blue div.card.card-text {
+	background-color: #248bf5; 
+	color: white;
+	border: 2px solid #fff; 
+	border-radius: 8px;
+}
+
+div.d-flex.align-items-baseline div.card.card-text {
+	background-color: #e5e5ea; 
+	color: #000;
+	border: 2px solid #fff; 
+	border-radius: 8px;
+}
+
+i.fa.fa-send {
+	font-size: 23px;	
+}
+
+i.fa.fa-send:hover {
+	color: #248bf5;
+}
