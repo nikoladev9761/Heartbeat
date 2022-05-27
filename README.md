@@ -1,4 +1,4 @@
-# Heartbeat Web Chat App (v1.0)
+# Heartbeat Web Chat App (v1.1)
 
 # Key features:
 1. User registration with email confirmation and verification
@@ -12,7 +12,9 @@
 
 # Changelog
 
-- Upcoming changes will be listed here
+v1.1:
+	- Cleaned some code
+	- Improved notifications
 
 # Screenshots
 
